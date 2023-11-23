@@ -7,7 +7,6 @@ const bodyParser = require('body-parser');
 const client = redis.createClient({
     host: process.env.REDIS_HOST || 'localhost',
     port: process.env.REDIS_PORT || 6379,
-    auth: process.env.REDIS_PASSWORD || 'your_redis_password',
 });
 
 // Connect to PostgreSQL database using environment variables
