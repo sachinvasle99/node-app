@@ -18,6 +18,10 @@ postgresql:
   enabled: true
   secretName: postgres-connection
 
+redis:
+  enabled: true
+  secretName: redis-connection
+  
 podAnnotations: {}
 
 podSecurityContext: {}

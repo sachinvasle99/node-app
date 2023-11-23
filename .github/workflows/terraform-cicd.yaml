@@ -3,7 +3,7 @@ name: "Terraform Infrastructure Change Management Pipeline with GitHub Actions"
 on:
  push:
    branches:
-   - main
+   - terraform
    paths:
    - terraform/**
 
@@ -15,9 +15,7 @@ jobs:
     runs-on: ubuntu-latest
     defaults:
       run:
-      shell: bash
-      # We keep Terraform files in the terraform directory.
-      working-directory: ./terraform
+        shell: bash
  
     steps:
     - name: Configure aws credentials
