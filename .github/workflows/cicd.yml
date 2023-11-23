@@ -43,3 +43,10 @@ jobs:
           echo "Pushing image to ECR..."
           docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
           echo "::set-output name=image::$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG"
+
+      - name: Update kube config
+        run: aws eks update-kubeconfig --name development-eks
+         
+      - name: Deploy nodejs helm chart to EKS
+        run: |
+          helm upgrade -i nodeapp ./helmchart/node-app
