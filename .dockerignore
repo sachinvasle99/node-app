@@ -1,3 +1,4 @@
-node_modules
-*/.terraform.lock.hcl
-*/.terraform
+helmchart
+terraform
+README.md  
+.github
