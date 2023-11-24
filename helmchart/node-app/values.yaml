@@ -39,6 +39,14 @@ service:
   type: ClusterIP
   port: 3000
 
+resources:
+  limits:
+    cpu: 250m
+    memory: 800Mi
+  requests:
+    cpu: 125m
+    memory: 100Mi
+
 ingress:
   enabled: false
   className: ""
