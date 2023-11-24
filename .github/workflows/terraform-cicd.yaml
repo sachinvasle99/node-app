@@ -6,14 +6,17 @@ on:
    - terraform
    paths:
    - terraform/**
- 
+   
+permissions:
+  issues: write
+
 jobs:
   terraform:
     name: "Terraform Infrastructure Change Management"
     runs-on: ubuntu-latest
     defaults:
       run:
-        shell: bash
+        working-directory: terraform/environment
  
     steps:
     - name: Configure aws credentials
@@ -39,6 +42,18 @@ jobs:
 
     - name: Terraform Plan
       run: terraform plan -input=false
+
+    - name: manual check approve
+      uses: trstringer/manual-approval@v1
+      with:
+        secret: ${{ github.TOKEN }}
+        approvers: sachinvasle99
+        minimum-approvals: 1
+        issue-title: "Deploying AWS infra"
+        issue-body: "Please approve or deny the deployment."
+        exclude-workflow-initiator-as-approver: false
+        additional-approved-words: ''
+        additional-denied-words: ''
 
       # On push to "main", deploy the Terraform infrastructure
     - name: Terraform Apply
