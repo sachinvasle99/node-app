@@ -176,5 +176,5 @@ variable "publicly_accessible" {
 variable "aurora_serverless_password_secret_id" {
   description = "Secret ID for the Aurora Serverless password in AWS Secrets Manager"
   type        = string
-  default     = "nodeapp_aurora_serverless_passwordue"
+  default     = "nodeapp_aurora_serverless_password"
 }
