@@ -1,10 +1,10 @@
 {
   "name": "app",
   "version": "1.0.0",
-  "description": "",
+  "description": "This is a Node.js web application that exposes a RESTful API with status and data endpoints. It includes a CI/CD pipeline using GitHub Actions to automate the building, and deployment processes.",
   "main": "index.js",
   "scripts": {
-    "start": "node index.js"
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
