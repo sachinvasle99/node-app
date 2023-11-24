@@ -1,3 +1,4 @@
+# Define an IAM role for EKS worker nodes
 resource "aws_iam_role" "nodes" {
   name = var.ng_role_name
 
@@ -13,6 +14,7 @@ resource "aws_iam_role" "nodes" {
   })
 }
 
+# Attach policies to the IAM role for EKS worker nodes
 resource "aws_iam_role_policy_attachment" "nodes-AmazonEKSWorkerNodePolicy" {
   policy_arn = "arn:aws:iam::aws:policy/AmazonEKSWorkerNodePolicy"
   role       = aws_iam_role.nodes.name
@@ -28,6 +30,7 @@ resource "aws_iam_role_policy_attachment" "nodes-AmazonEC2ContainerRegistryReadO
   role       = aws_iam_role.nodes.name
 }
 
+# Define an EKS node group for private nodes
 resource "aws_eks_node_group" "private-nodes" {
   cluster_name    = aws_eks_cluster.demo.name
   node_group_name = var.node_group_name

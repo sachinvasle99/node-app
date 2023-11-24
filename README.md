@@ -51,6 +51,24 @@ The AWS infrastructure is provisioned using Terraform. It includes:
 5. Node group
 6. Security Group 
 
+**Instructions:**
+
+Before deploying the AWS infra, Create RDS credentials in AWS Secrets Manager with "nodeapp_aurora_serverless_password" as id and store the RDS password as its value.
+
+As you can see terraform block in the aurora-psql.tf, we are passing the RDS pass from secrets manager
+```console
+data "aws_secretsmanager_secret_version" "serverless_creds" {
+  secret_id = "nodeapp_aurora_serverless_password"
+}
+
+locals {
+  rds_password = jsondecode(
+    data.aws_secretsmanager_secret_version.serverless_creds.secret_string
+  )
+}
+```
+
+
 To deploy the infrastructure manually, follow these steps:
 1. Ensure you have the AWS CLI installed and configured.
 2. Navigate to the terraform/ directory.
