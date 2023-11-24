@@ -3,9 +3,9 @@ data "aws_availability_zones" "available_azs" {}
 
 # define VPC
 resource "aws_vpc" "main_network" {
-  cidr_block = "172.17.0.0/16"
-  enable_dns_hostnames = true
-  enable_dns_support = true
+  cidr_block = var.cidr_block
+  enable_dns_hostnames = var.enable_dns_hostnames
+  enable_dns_support = var.enable_dns_support
   tags = {
     Name = "${var.name_prefix}-vpc"
   }
@@ -17,7 +17,7 @@ resource "aws_subnet" "private_subnet" {
   cidr_block              = "${cidrsubnet(aws_vpc.main_network.cidr_block, 8, count.index)}"
   availability_zone       = "${data.aws_availability_zones.available_azs.names[count.index]}"
   vpc_id                  = "${aws_vpc.main_network.id}"
-  map_public_ip_on_launch = true
+  map_public_ip_on_launch = var.map_public_ip_on_launch
   tags = {
     Name = "${var.name_prefix}-private-subnet-${count.index}"
   }
