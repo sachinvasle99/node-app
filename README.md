@@ -15,19 +15,15 @@ This is a Node.js web application that exposes a RESTful API with status and dat
    ```bash
    git clone https://github.com/your-username/your-repo.git
    cd your-repo
-
 2. **Install Dependencies:**
    ```bash
    npm init
-
 3. **Run the index.js**
    ```bash
    node index.js
-
 4. **Output should be like this**
    ```bash
    Server listening on port 3000
-
 5. **Test the API Endpoints**
    ```bash  
    curl http://localhost:3000/status
@@ -40,20 +36,12 @@ This is a Node.js web application that exposes a RESTful API with status and dat
 
    Send the request and verify that you receive a message
    {"message":"Data stored successfully"}%   
-
 ## AWS Infrastructure
-The AWS infrastructure is provisioned using Terraform. It includes:
-
-1. VPC
-2. Aurora postgres serveless v2 cluster
-3. EKS cluster
-4. ECR registry
-5. Node group
-6. Security Group 
+The AWS infrastructure is provisioned using Terraform.
 
 **Instructions:**
 
-Before deploying the AWS infra, Create RDS credentials in AWS Secrets Manager with "nodeapp_aurora_serverless_password" as id and store the RDS password as its value.
+Before deploying the AWS infra, Create RDS credentials in AWS Secrets Manager with "nodeapp_aurora_serverless_password" as the secret name, this secrets will store the rds password as key/value format, secret key should be "password" and and value should be the the actual password something like "must_be_eight_characters123456"
 
 As you can see terraform block in the aurora-psql.tf, we are passing the RDS pass from secrets manager
 ```console
@@ -67,16 +55,31 @@ locals {
   )
 }
 ```
+We have terraform directory in which you can find environment and module folder, module has all the terraform resources which required for the given task
 
+1. VPC
+2. Aurora postgres serveless v2 cluster
+3. EKS cluster
+4. ECR registry
+5. Node group
+6. Security Group 
 
-To deploy the infrastructure manually, follow these steps:
+environment directory has the tfvars environment sepecific(development and production)
+
+To deploy the infrastructure manually, follow these steps(for development environment):
 1. Ensure you have the AWS CLI installed and configured.
 2. Navigate to the terraform/ directory.
 3. Run the following commands:
    ```bash
    terraform init
-   terraform plan
-   terraform apply
+
+   terraform plan -var-file=terraform.dev.tfvars
+
+   terraform apply -var-file=terraform.dev.tfvars
+4. Destory the created infra using follwing command:
+   ```bash
+   terraform destroy -var-file=terraform.dev.tfvars   
+If you want to deploy the infra for production environment, replace the -var-file=terraform.dev.tfvars with terraform.staging.tfvars
 
 ## CI/CD Pipeline for Terraform Infrastructure Changes
 
