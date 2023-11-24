@@ -44,7 +44,6 @@ jobs:
           docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
           echo "::set-output name=image::$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG"
   deploy:
-    runs-on: ubuntu-latest
     needs: build
     steps:
       - name: Update kube config
